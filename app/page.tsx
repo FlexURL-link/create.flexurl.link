@@ -66,10 +66,6 @@ export default function CreatePage() {
 
   return (
     <article className="card" style={{ maxWidth: 480, width: '100%', padding: '2.5rem 2rem' }}>
-      <div className="brand" style={{ justifyContent: 'center', marginBottom: '0.5rem' }}>
-        <span className="brand-mark">F</span>
-        <span>FlexURL</span>
-      </div>
       <h2 className="gradient-text" style={{ textAlign: 'center', fontSize: '1.5rem', marginBottom: '0.4rem' }}>
         Create a short link
       </h2>
