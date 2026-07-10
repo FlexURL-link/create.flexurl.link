@@ -77,10 +77,6 @@ export default function CreatePage() {
 
       <div className="create-card">
         <div className="card-header">
-          <span className="eyebrow">
-            <span className="eyebrow-dot" />
-            Privacy first
-          </span>
           <h1 className="card-title">
             Create a<br />
             <span className="gradient-text">short link</span>
@@ -166,12 +162,6 @@ export default function CreatePage() {
             </button>
           </form>
         )}
-
-        <div className="card-trust">
-          <div className="trust-item"><IconCheck /> No account</div>
-          <div className="trust-item"><IconCheck /> No tracking</div>
-          <div className="trust-item"><IconCheck /> Encrypted</div>
-        </div>
 
         <a href="https://flexurl.link" target="_blank" rel="noreferrer" className="card-footer-link">
           <IconShield /> Powered by <strong>FlexURL</strong>
