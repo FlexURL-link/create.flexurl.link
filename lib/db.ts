@@ -1,13 +1,19 @@
 import { Pool } from 'pg';
 
-const rawUrl = process.env.POSTGRES_URL ?? '';
-const url = new URL(rawUrl);
-url.searchParams.delete('sslmode');
+let pool: Pool | null = null;
 
-const pool = new Pool({
-    connectionString: url.toString(),
-    ssl: { rejectUnauthorized: false },
-});
+function getPool(): Pool {
+    if (!pool) {
+        const rawUrl = process.env.POSTGRES_URL ?? '';
+        const url = new URL(rawUrl);
+        url.searchParams.delete('sslmode');
+        pool = new Pool({
+            connectionString: url.toString(),
+            ssl: { rejectUnauthorized: false },
+        });
+    }
+    return pool;
+}
 
 function sql(strings: TemplateStringsArray, ...values: unknown[]) {
     let text = '';
@@ -19,7 +25,7 @@ function sql(strings: TemplateStringsArray, ...values: unknown[]) {
             text += `$${params.length}`;
         }
     });
-    return pool.query(text, params);
+    return getPool().query(text, params);
 }
 
 export { sql };
