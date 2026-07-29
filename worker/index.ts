@@ -4,7 +4,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { nanoid } from 'nanoid';
 import { createDb } from './lib/db';
-import { encrypt } from './lib/encryption';
+import { encrypt, decrypt } from './lib/encryption';
 export type Env = {
   DB: D1Database;
   ENCRYPTION_KEY: string;
@@ -39,7 +39,7 @@ app.post('/api/create', async (c) => {
     if (error.message?.includes('UNIQUE constraint'))
       return c.json({ error: 'This slug is already taken. Try another one.' }, 400);
     console.error('Create error:', error);
-    return c.json({ error: 'An error occurred. Please try again.' }, 500);
+    return c.json({ error: error.message || 'An error occurred' }, 500);
   }
 });
 
@@ -51,6 +51,18 @@ app.get('/api/cleanup', async (c) => {
   } catch (error) {
     console.error('Cleanup error:', error);
     return c.json({ error: 'Internal server error' }, 500);
+  }
+});
+
+app.get('/api/test', async (c) => {
+  try {
+    const db = createDb(c.env);
+    await db.sql`SELECT 1`.run();
+    const enc = await encrypt('hello', c.env.ENCRYPTION_KEY);
+    const dec = await decrypt(enc, c.env.ENCRYPTION_KEY);
+    return c.json({ d1: 'ok', encrypt: dec === 'hello', env: !!c.env.ENCRYPTION_KEY });
+  } catch (error: any) {
+    return c.json({ error: error.message, stack: error.stack }, 500);
   }
 });
 
