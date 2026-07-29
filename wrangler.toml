@@ -1,0 +1,8 @@
+name = "create-flexurl-link"
+main = "worker/index.ts"
+compatibility_date = "2026-07-29"
+compatibility_flags = ["nodejs_compat"]
+
+d1_databases = [
+  { binding = "DB", database_name = "flexurl", database_id = "5e743083-a072-4af6-bae6-728d253235b8" }
+]

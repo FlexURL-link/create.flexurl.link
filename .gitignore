@@ -4,5 +4,8 @@ out/
 .env
 .env.local
 .env*.local
+.dev.vars
 *.tsbuildinfo
 next-env.d.ts
+.wrangler/
+worker-configuration.d.ts
