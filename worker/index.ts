@@ -70,7 +70,7 @@ const LANDING_PAGE = `<!DOCTYPE html>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background: #f7f7f5; color: #0a0a0a;
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-family: system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh; display: flex; align-items: center; justify-content: center;
     padding: 2rem 1.25rem;
