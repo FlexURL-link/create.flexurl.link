@@ -4,7 +4,8 @@ let pool: Pool | null = null;
 
 function getPool(): Pool {
     if (!pool) {
-        const rawUrl = process.env.POSTGRES_URL ?? '';
+        const rawUrl = process.env.POSTGRES_URL;
+        if (!rawUrl) throw new Error('POSTGRES_URL not set');
         const url = new URL(rawUrl);
         url.searchParams.delete('sslmode');
         pool = new Pool({
