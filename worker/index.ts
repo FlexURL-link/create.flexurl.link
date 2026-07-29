@@ -67,10 +67,11 @@ const LANDING_PAGE = `<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FlexURL Create</title>
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Manrope:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600;700&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     background: #f7f7f5; color: #0a0a0a;
-    font-family: system-ui, -apple-system, sans-serif;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     min-height: 100vh; display: flex; align-items: center; justify-content: center;
     padding: 2rem 1.25rem;
