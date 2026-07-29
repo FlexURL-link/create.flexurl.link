@@ -4,7 +4,7 @@ import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { nanoid } from 'nanoid';
 import { createDb } from './lib/db';
-import { encrypt, decrypt } from './lib/encryption';
+import { encrypt } from './lib/encryption';
 export type Env = {
   DB: D1Database;
   ENCRYPTION_KEY: string;
@@ -32,7 +32,7 @@ app.post('/api/create', async (c) => {
     const encryptedUrl = await encrypt(url, c.env.ENCRYPTION_KEY);
     const db = createDb(c.env);
 
-    await db.sql`INSERT INTO redirects (id, url, version, expires_at) VALUES (${id}, ${encryptedUrl}, 'lite', ${expiresAt || null})`.run();
+    await db.sql`INSERT INTO redirects (id, url, expires_at) VALUES (${id}, ${encryptedUrl}, ${expiresAt || null})`.run();
 
     return c.json({ success: true, id, slug: id }, 201);
   } catch (error: any) {
@@ -51,18 +51,6 @@ app.get('/api/cleanup', async (c) => {
   } catch (error) {
     console.error('Cleanup error:', error);
     return c.json({ error: 'Internal server error' }, 500);
-  }
-});
-
-app.get('/api/test', async (c) => {
-  try {
-    const db = createDb(c.env);
-    await db.sql`SELECT 1`.run();
-    const enc = await encrypt('hello', c.env.ENCRYPTION_KEY);
-    const dec = await decrypt(enc, c.env.ENCRYPTION_KEY);
-    return c.json({ d1: 'ok', encrypt: dec === 'hello', env: !!c.env.ENCRYPTION_KEY });
-  } catch (error: any) {
-    return c.json({ error: error.message, stack: error.stack }, 500);
   }
 });
 
