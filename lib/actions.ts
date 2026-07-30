@@ -24,8 +24,8 @@ export async function createLink(url: string, customId?: string, expiresAt?: str
 
     try {
         await sql`
-            INSERT INTO redirects (id, url, version, expires_at)
-            VALUES (${id}, ${encryptedUrl}, 'lite', ${expiresDate})
+            INSERT INTO redirects (id, url, expires_at)
+            VALUES (${id}, ${encryptedUrl}, ${expiresDate})
         `;
         return { success: true, id, slug: id };
     } catch (error: any) {
